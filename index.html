@@ -748,6 +748,7 @@
       try {
         stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
         scanPreview.srcObject = stream;
+        await scanPreview.play();
         scanPreview.style.display = 'block';
         captureBtn.style.display = 'block';
         startCameraBtn.style.display = 'none';
@@ -757,6 +758,8 @@
     }
     function stopCamera() {
       if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+      scanPreview.pause();
+      scanPreview.srcObject = null;
       scanPreview.style.display = 'none';
       captureBtn.style.display = 'none';
       startCameraBtn.style.display = 'block';
