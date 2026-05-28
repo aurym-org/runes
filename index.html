@@ -64,8 +64,6 @@
     .result-box.show { display: block; }
     .flex-row { display: flex; gap: 12px; }
     .flex-row > * { flex: 1; }
-    .checkbox-group { display: flex; align-items: center; gap: 10px; margin: 12px 0; }
-    .checkbox-group input { width: 18px; height: 18px; accent-color: #EBC634; }
     .dropzone {
       border: 2px dashed #36454F;
       border-radius: 20px;
@@ -83,11 +81,6 @@
       color: #EBC634;
     }
     .dropzone .icon { font-size: 2rem; display: block; margin-bottom: 8px; }
-    #scanPreview { width: 100%; max-width: 360px; margin: 0 auto 16px; display: none; border-radius: 20px; background: #000; }
-    .scan-hint { text-align: center; font-size: 0.9rem; color: #B0A89C; margin: 12px 0; }
-
-    .scan-wrapper { position: relative; display: inline-block; width: 100%; }
-    .scan-wrapper video { display: block; width: 100%; border-radius: 20px; }
 
     .theme-selector { display: flex; gap: 8px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap; }
     .theme-dot {
@@ -109,12 +102,11 @@
 <body>
 <div class="container" id="appContainer">
   <h1>aurym runes</h1>
-  <div class="sub">锻造·解码·光影扫描</div>
+  <div class="sub">锻造·解码</div>
 
   <div class="tab-bar">
     <button class="tab active" data-panel="forge">⚒️ 锻造</button>
     <button class="tab" data-panel="decode">📂 文件解码</button>
-    <button class="tab" data-panel="scan">📸 扫描符文</button>
   </div>
 
   <!-- 锻造面板 -->
@@ -131,10 +123,6 @@
     <div class="input-group">
       <label>秘密的文字</label>
       <textarea id="secretText" rows="3" placeholder="写下只有ta能读的诗句…"></textarea>
-    </div>
-    <div class="checkbox-group">
-      <input type="checkbox" id="scanModeCheck">
-      <label style="margin:0; color:#EBC634;">✨ 可扫描模式（短密语 ≤40汉字，肉眼几乎不可见的微光刻印）</label>
     </div>
     <div class="input-group">
       <label>加密口令（留空则无口令）</label>
@@ -159,23 +147,6 @@
     </div>
     <button class="btn" id="decodeBtn"><span>🔓</span> 解码秘密</button>
     <div id="decodeResult" class="result-box"></div>
-  </div>
-
-  <!-- 扫描面板 -->
-  <div id="scanPanel" class="panel">
-    <div class="scan-hint">将符文图片置于摄像头前，或拖放图片到下方区域</div>
-    <div class="scan-wrapper">
-      <video id="scanPreview" autoplay playsinline></video>
-      <canvas id="scanOverlay" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></canvas>
-    </div>
-    <canvas id="scanCanvas" style="display:none;"></canvas>
-    <button class="btn" id="startCameraBtn"><span>📷</span> 打开摄像头</button>
-    <button class="btn" id="captureBtn" style="margin-top:12px; display:none;"><span>📸</span> 拍照并破译</button>
-    <div class="dropzone" id="scanDropzone" style="margin-top:12px;">
-      <span class="icon">🖼️</span>
-      <span>或拖放截图到这里直接破译</span>
-    </div>
-    <div id="scanResult" class="result-box"></div>
   </div>
 </div>
 
@@ -226,7 +197,6 @@
     };
     let currentTheme = 'darkgold';
 
-    // 工具：更新当前激活tab的主题样式
     function applyThemeToActiveTab() {
       const activeTab = document.querySelector('.tab.active');
       if (activeTab) {
@@ -236,7 +206,6 @@
       }
     }
 
-    // 工具：清除所有tab的内联样式
     function resetAllTabsStyle() {
       document.querySelectorAll('.tab').forEach(t => {
         t.style.background = '';
@@ -245,7 +214,6 @@
       });
     }
 
-    // 工具：切换到指定面板（修复标签高亮bug）
     function switchToPanel(panelName) {
       resetAllTabsStyle();
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -266,11 +234,8 @@
       return hash >>> 0;
     }
 
-    const GRID_SIZE = 8;
-    const MAX_SCAN_BYTES = 16;
-
-    // ---------- 绘制符文 ----------
-    function drawRune(canvas, text, withDots = false, dotData = null, themeName = currentTheme) {
+    // ---------- 绘制符文（仅基础六边形，无扫描光点） ----------
+    function drawRune(canvas, text, themeName = currentTheme) {
       const ctx = canvas.getContext('2d');
       const w = canvas.width, h = canvas.height;
       ctx.clearRect(0, 0, w, h);
@@ -304,10 +269,6 @@
       ctx.save(); ctx.globalAlpha = bottomOp;
       ctx.beginPath(); ctx.moveTo(w*0.375, h*0.723); ctx.lineTo(w/2, h*0.616); ctx.lineTo(w*0.625, h*0.723); ctx.closePath();
       ctx.fillStyle = grad; ctx.fill(); ctx.restore();
-
-      if (withDots && dotData) {
-        drawDotMatrix(ctx, w, h, dotData, theme.dots);
-      }
     }
 
     function drawDefaultHex(ctx, w, h, theme) {
@@ -319,29 +280,6 @@
       ctx.moveTo(w/2,h*0.17); ctx.lineTo(w*0.839,h*0.83); ctx.lineTo(w*0.696,h*0.83);
       ctx.lineTo(w/2,h*0.437); ctx.lineTo(w*0.304,h*0.83); ctx.lineTo(w*0.161,h*0.83);
       ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
-    }
-
-    function drawDotMatrix(ctx, w, h, dotData, dotColors) {
-      const left = w * 0.32, right = w * 0.68;
-      const top = h * 0.68, bottom = h * 0.78;
-      const stepX = (right - left) / GRID_SIZE;
-      const stepY = (bottom - top) / GRID_SIZE;
-      const dotSize = 1.5;
-      for (let row = 0; row < GRID_SIZE; row++) {
-        for (let col = 0; col < GRID_SIZE; col++) {
-          const idx = (row * GRID_SIZE + col) * 2;
-          if (idx >= dotData.length * 8) break;
-          const byteIdx = Math.floor(idx / 8);
-          const bitOffset = idx % 8;
-          let bits = 0;
-          if (byteIdx < dotData.length) {
-            bits = (dotData[byteIdx] >> (6 - bitOffset)) & 0x03;
-          }
-          const color = dotColors[bits];
-          ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},0.7)`;
-          ctx.fillRect(left + col * stepX, top + row * stepY, dotSize, dotSize);
-        }
-      }
     }
 
     // ---------- AES-GCM ----------
@@ -399,20 +337,6 @@
       return newBuf.buffer;
     }
 
-    // ---------- 视觉码编码/解码 ----------
-    function encodeVisualData(text) {
-      const bytes = new TextEncoder().encode(text);
-      if (bytes.length > MAX_SCAN_BYTES) throw new Error('短密语过长（最多16字节）');
-      const padded = new Uint8Array(MAX_SCAN_BYTES);
-      padded.set(bytes);
-      return padded;
-    }
-    function decodeVisualData(bytes) {
-      const end = bytes.indexOf(0);
-      const txt = new TextDecoder().decode(bytes.slice(0, end>=0?end:MAX_SCAN_BYTES));
-      return txt;
-    }
-
     // ---------- UI 元素 ----------
     const previewCanvas = document.getElementById('previewCanvas');
     const secretText = document.getElementById('secretText');
@@ -420,26 +344,16 @@
     const forgeBtn = document.getElementById('forgeBtn');
     const shareLinkBtn = document.getElementById('shareLinkBtn');
     const forgeHint = document.getElementById('forgeHint');
-    const scanModeCheck = document.getElementById('scanModeCheck');
     const fileInput = document.getElementById('fileInput');
     const decodePassword = document.getElementById('decodePassword');
     const decodeBtn = document.getElementById('decodeBtn');
     const decodeResult = document.getElementById('decodeResult');
     const fileNameSpan = document.getElementById('fileName');
-    const startCameraBtn = document.getElementById('startCameraBtn');
-    const captureBtn = document.getElementById('captureBtn');
-    const scanPreview = document.getElementById('scanPreview');
-    const scanCanvas = document.getElementById('scanCanvas');
-    const scanOverlay = document.getElementById('scanOverlay');
-    const scanResult = document.getElementById('scanResult');
     const decodeDropzone = document.getElementById('decodeDropzone');
-    const scanDropzone = document.getElementById('scanDropzone');
     const themeDots = document.querySelectorAll('.theme-dot');
 
     let lastPayload = null;
-    let lastScanDotData = null;
 
-    // 应用初始主题
     applyThemeToActiveTab();
 
     // ---------- 主题切换 ----------
@@ -449,7 +363,7 @@
         dot.classList.add('active');
         currentTheme = dot.dataset.theme;
         applyThemeToActiveTab();
-        drawRune(previewCanvas, secretText.value, scanModeCheck.checked, lastScanDotData);
+        drawRune(previewCanvas, secretText.value);
       });
     });
 
@@ -458,18 +372,16 @@
       tab.addEventListener('click', () => {
         const panelName = tab.dataset.panel;
         switchToPanel(panelName);
-        if (panelName === 'scan') stopCamera();
       });
     });
 
     // 实时预览
-    secretText.addEventListener('input', ()=> {
-      lastScanDotData = null;
-      drawRune(previewCanvas, secretText.value, false, null);
+    secretText.addEventListener('input', () => {
+      drawRune(previewCanvas, secretText.value);
     });
     drawRune(previewCanvas, '');
 
-    // ---------- 粒子动画（全屏独立版） ----------
+    // ---------- 粒子动画 ----------
     function playForgeAnimation() {
       const canvas = previewCanvas;
       const ctx = canvas.getContext('2d');
@@ -493,7 +405,7 @@
         if (!alive) return;
 
         ctx.clearRect(0, 0, w, h);
-        drawRune(canvas, secretText.value, scanModeCheck.checked, lastScanDotData);
+        drawRune(canvas, secretText.value);
 
         ctx.globalCompositeOperation = 'lighter';
         for (let p of particles) {
@@ -515,72 +427,11 @@
       requestAnimationFrame(animate);
     }
 
-    // ---------- 光点呼吸动画 ----------
-    let breathingAnimationId = null;
-    function startBreathingAnimation() {
-      if (breathingAnimationId) cancelAnimationFrame(breathingAnimationId);
-      if (!scanModeCheck.checked || !secretText.value.trim()) return;
-      const canvas = previewCanvas;
-      const ctx = canvas.getContext('2d');
-      const text = secretText.value;
-      let time = 0;
-      function breathe() {
-        time += 0.05;
-        drawRune(canvas, text, true, lastScanDotData);
-        ctx.save();
-        ctx.globalAlpha = 0.15 + Math.sin(time) * 0.05;
-        const w = canvas.width, h = canvas.height;
-        const left = w * 0.32, right = w * 0.68;
-        const top = h * 0.68, bottom = h * 0.78;
-        const stepX = (right - left) / GRID_SIZE;
-        const stepY = (bottom - top) / GRID_SIZE;
-        for (let row = 0; row < GRID_SIZE; row++) {
-          for (let col = 0; col < GRID_SIZE; col++) {
-            ctx.beginPath();
-            ctx.arc(left + col * stepX, top + row * stepY, 1.5, 0, 2*Math.PI);
-            ctx.fillStyle = `rgba(255,255,200,${0.3+Math.sin(time+row+col)*0.2})`;
-            ctx.fill();
-          }
-        }
-        ctx.restore();
-        breathingAnimationId = requestAnimationFrame(breathe);
-      }
-      breathingAnimationId = requestAnimationFrame(breathe);
-    }
-    function stopBreathingAnimation() {
-      if (breathingAnimationId) {
-        cancelAnimationFrame(breathingAnimationId);
-        breathingAnimationId = null;
-      }
-      drawRune(previewCanvas, secretText.value, scanModeCheck.checked, lastScanDotData);
-    }
-    scanModeCheck.addEventListener('change', () => {
-      if (scanModeCheck.checked) {
-        if (secretText.value.trim()) {
-          try {
-            lastScanDotData = encodeVisualData(secretText.value);
-            startBreathingAnimation();
-          } catch(e) {
-            alert(e.message);
-            scanModeCheck.checked = false;
-          }
-        }
-      } else {
-        stopBreathingAnimation();
-        lastScanDotData = null;
-        drawRune(previewCanvas, secretText.value, false, null);
-      }
-    });
-
     // ---------- 锻造（立即下载 + 背景动画） ----------
     forgeBtn.addEventListener('click', async () => {
       const text = secretText.value.trim();
       if (!text) return alert('请输入秘密文字');
       const pwd = forgePassword.value;
-      const useScan = scanModeCheck.checked;
-      if (useScan && new TextEncoder().encode(text).length > MAX_SCAN_BYTES) {
-        return alert('可扫描模式仅支持最多16字节的短密语');
-      }
       forgeBtn.disabled = true;
       forgeBtn.innerHTML = '⏳ 锻造中...';
       forgeSound();
@@ -589,12 +440,10 @@
       try {
         const payload = await encryptText(text, pwd);
         lastPayload = payload;
-        if (useScan) lastScanDotData = encodeVisualData(text);
-        else lastScanDotData = null;
 
         const hdCanvas = document.createElement('canvas');
         hdCanvas.width = 512; hdCanvas.height = 512;
-        drawRune(hdCanvas, text, useScan, lastScanDotData);
+        drawRune(hdCanvas, text);
         const blob = await new Promise(r => hdCanvas.toBlob(r, 'image/png'));
         const buf = await blob.arrayBuffer();
         const newBuf = insertTextChunk(buf, 'AurymRune', payload);
@@ -607,7 +456,7 @@
         a.remove();
         URL.revokeObjectURL(url);
 
-        forgeHint.textContent = '符文已保存。' + (useScan ? ' 可用摄像头或拖放图片扫描破译。' : '');
+        forgeHint.textContent = '符文已保存。';
         shareLinkBtn.style.display = 'flex';
         successSound();
       } catch (e) {
@@ -717,216 +566,6 @@
       lastPayload = null; // 使用文件模式
     });
 
-    setupDropzone(scanDropzone, document.createElement('input'), null, async (file) => {
-      scanResult.classList.remove('show');
-      scanResult.textContent = '🔍 正在分析图片...';
-      const img = new Image();
-      const url = URL.createObjectURL(file);
-      img.onload = async () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width; canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const result = processScanFrame(imageData);
-        if (result) {
-          scanResult.textContent = '🔓 扫描结果：' + result;
-          successSound();
-        } else {
-          scanResult.textContent = '❌ 未检测到有效符文';
-        }
-        scanResult.classList.add('show');
-        URL.revokeObjectURL(url);
-      };
-      img.src = url;
-    });
-
-    // ---------- 摄像头扫描与魔法滤镜 ----------
-    let stream = null;
-    let scanAnimationId = null;
-    async function startCamera() {
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-        scanPreview.srcObject = stream;
-        await scanPreview.play();
-        scanPreview.style.display = 'block';
-        captureBtn.style.display = 'block';
-        startCameraBtn.style.display = 'none';
-        scanResult.classList.remove('show');
-        animateScanOverlay();
-      } catch(e) { alert('无法访问摄像头: ' + e.message); }
-    }
-    function stopCamera() {
-      if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-      scanPreview.pause();
-      scanPreview.srcObject = null;
-      scanPreview.style.display = 'none';
-      captureBtn.style.display = 'none';
-      startCameraBtn.style.display = 'block';
-      scanPreview.srcObject = null;
-      if (scanAnimationId) cancelAnimationFrame(scanAnimationId);
-      const octx = scanOverlay.getContext('2d');
-      octx.clearRect(0, 0, scanOverlay.width, scanOverlay.height);
-    }
-    function animateScanOverlay() {
-      const video = scanPreview;
-      const canvas = scanOverlay;
-      if (!video.videoWidth || !stream) {
-        scanAnimationId = requestAnimationFrame(animateScanOverlay);
-        return;
-      }
-      canvas.width = video.videoWidth || 640;
-      canvas.height = video.videoHeight || 480;
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const time = Date.now() / 1000;
-      ctx.strokeStyle = '#EBC634';
-      ctx.lineWidth = 4;
-      ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
-      ctx.fillStyle = '#EBC634';
-      const cs = 20;
-      [
-        [20, 20],
-        [canvas.width - 20, 20],
-        [20, canvas.height - 20],
-        [canvas.width - 20, canvas.height - 20]
-      ].forEach(([x, y]) => {
-        ctx.fillRect(x - 5, y - 5, cs, 5);
-        ctx.fillRect(x - 5, y - 5, 5, cs);
-      });
-      const scanY = (Math.sin(time * 0.5) * 0.5 + 0.5) * (canvas.height - 80) + 40;
-      ctx.beginPath();
-      ctx.moveTo(40, scanY);
-      ctx.lineTo(canvas.width - 40, scanY);
-      ctx.strokeStyle = 'rgba(235,198,52,0.7)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      for (let i = 0; i < 8; i++) {
-        const px = 40 + Math.random() * (canvas.width - 80);
-        const py = 40 + Math.random() * (canvas.height - 80);
-        ctx.beginPath();
-        ctx.arc(px, py, 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(252,232,131,${0.3 + Math.sin(time + i) * 0.2})`;
-        ctx.fill();
-      }
-      scanAnimationId = requestAnimationFrame(animateScanOverlay);
-    }
-    startCameraBtn.addEventListener('click', startCamera);
-    captureBtn.addEventListener('click', () => {
-      if (!stream) return;
-      const video = scanPreview;
-      const cvs = scanCanvas;
-      cvs.width = video.videoWidth || 640;
-      cvs.height = video.videoHeight || 480;
-      const ctx = cvs.getContext('2d');
-      ctx.drawImage(video, 0, 0, cvs.width, cvs.height);
-      const imageData = ctx.getImageData(0, 0, cvs.width, cvs.height);
-      const result = processScanFrame(imageData);
-      if (result) {
-        scanResult.textContent = '🔓 扫描结果：' + result;
-        successSound();
-        const flash = document.createElement('div');
-        flash.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(235,198,52,0.8);z-index:999;';
-        document.body.appendChild(flash);
-        setTimeout(() => flash.style.opacity = '0', 50);
-        setTimeout(() => document.body.removeChild(flash), 300);
-      } else {
-        scanResult.textContent = '❌ 未检测到有效符文，请调整角度或距离';
-      }
-      scanResult.classList.add('show');
-    });
-
-    function processScanFrame(imageData) {
-      const { data, width, height } = imageData;
-      const step = 4;
-      let points = [];
-      for (let y = 0; y < height; y += step) {
-        for (let x = 0; x < width; x += step) {
-          const i = (y * width + x) * 4;
-          const gray = data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114;
-          if (gray > 180) points.push({ x, y, gray });
-        }
-      }
-      if (points.length < 50) return null;
-      points.sort((a, b) => b.gray - a.gray);
-      const candidates = [];
-      for (let p of points) {
-        if (candidates.length >= 3) break;
-        let far = true;
-        for (let c of candidates) {
-          if (Math.hypot(p.x - c.x, p.y - c.y) < Math.min(width, height) * 0.15) {
-            far = false;
-            break;
-          }
-        }
-        if (far) candidates.push(p);
-      }
-      if (candidates.length < 3) return null;
-      const sorted = [...candidates].sort((a, b) => a.y - b.y);
-      const top = sorted[0];
-      const leftBottom = sorted[1].x < sorted[2].x ? sorted[1] : sorted[2];
-      const rightBottom = sorted[1].x < sorted[2].x ? sorted[2] : sorted[1];
-      const srcPts = [top, leftBottom, rightBottom];
-      const dstPts = [{ x: 256, y: 87 }, { x: 165, y: 425 }, { x: 347, y: 425 }];
-      const mat = getAffineTransform(srcPts, dstPts);
-      if (!mat) return null;
-      const left = 164, right = 348, gridTop = 348, gridBottom = 400;
-      const stepX = (right - left) / GRID_SIZE, stepY = (gridBottom - gridTop) / GRID_SIZE;
-      const dotValues = [];
-      for (let row = 0; row < GRID_SIZE; row++) {
-        for (let col = 0; col < GRID_SIZE; col++) {
-          const sx = left + col * stepX;
-          const sy = gridTop + row * stepY;
-          const { x: px, y: py } = applyAffine(mat, sx, sy);
-          if (px < 0 || px >= width - 1 || py < 0 || py >= height - 1) {
-            dotValues.push(-1);
-            continue;
-          }
-          const ix = Math.round(px), iy = Math.round(py);
-          const idx = (iy * width + ix) * 4;
-          const r = data[idx], g = data[idx + 1], b = data[idx + 2];
-          const dotColors = themes[currentTheme].dots;
-          let minDist = Infinity, val = 0;
-          for (let c = 0; c < 4; c++) {
-            const dr = r - dotColors[c][0], dg = g - dotColors[c][1], db = b - dotColors[c][2];
-            const dist = dr * dr + dg * dg + db * db;
-            if (dist < minDist) { minDist = dist; val = c; }
-          }
-          dotValues.push(val);
-        }
-      }
-      const bytes = new Uint8Array(MAX_SCAN_BYTES);
-      for (let i = 0; i < 64; i++) {
-        const byteIdx = Math.floor(i / 4);
-        const shift = (6 - (i % 4) * 2);
-        bytes[byteIdx] |= (dotValues[i] & 0x03) << shift;
-      }
-      return decodeVisualData(bytes);
-    }
-
-    function getAffineTransform(src, dst) {
-      const X = [src[0].x, src[1].x, src[2].x];
-      const Y = [src[0].y, src[1].y, src[2].y];
-      const Xp = [dst[0].x, dst[1].x, dst[2].x];
-      const Yp = [dst[0].y, dst[1].y, dst[2].y];
-      const a = X[1] - X[0], b = X[2] - X[0], c = Y[1] - Y[0], d = Y[2] - Y[0];
-      const det = a * d - b * c;
-      if (Math.abs(det) < 1e-6) return null;
-      const invDet = 1 / det;
-      return {
-        a11: (d * Xp[1] - b * Xp[2] + (b * Y[2] - d * Y[1]) * X[0]) * invDet,
-        a12: (a * Xp[2] - c * Xp[1] + (c * Y[1] - a * Y[2]) * X[0]) * invDet,
-        a21: (d * Yp[1] - b * Yp[2] + (b * Y[2] - d * Y[1]) * Y[0]) * invDet,
-        a22: (a * Yp[2] - c * Yp[1] + (c * Y[1] - a * Y[2]) * Y[0]) * invDet,
-        tx: Xp[0] - (d * Xp[1] - b * Xp[2] + (b * Y[2] - d * Y[1]) * X[0]) * invDet * X[0] - (a * Xp[2] - c * Xp[1] + (c * Y[1] - a * Y[2]) * X[0]) * invDet * Y[0],
-        ty: Yp[0] - (d * Yp[1] - b * Yp[2] + (b * Y[2] - d * Y[1]) * Y[0]) * invDet * X[0] - (a * Yp[2] - c * Yp[1] + (c * Y[1] - a * Y[2]) * Y[0]) * invDet * Y[0]
-      };
-    }
-    function applyAffine(mat, x, y) {
-      return { x: mat.a11 * x + mat.a12 * y + mat.tx, y: mat.a21 * x + mat.a22 * y + mat.ty };
-    }
-
-    window.addEventListener('beforeunload', stopCamera);
     checkShareLink();
   })();
 </script>
