@@ -90,7 +90,6 @@
     }
     .theme-dot.active { border-color: #FFF; box-shadow: 0 0 8px rgba(255,255,255,0.5); }
 
-    /* 手机端 canvas 自适应 */
     @media (max-width: 480px) {
       .container { padding: 24px 16px; }
       .preview-area canvas {
@@ -235,7 +234,7 @@
       return hash >>> 0;
     }
 
-    // ---------- 绘制符文（仅基础六边形，无扫描光点） ----------
+    // ---------- 绘制符文 ----------
     function drawRune(canvas, text, themeName = currentTheme) {
       const ctx = canvas.getContext('2d');
       const w = canvas.width, h = canvas.height;
@@ -283,7 +282,7 @@
       ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
     }
 
-    // ---------- AES-GCM ----------
+    // ---------- AES-GCM (现代API，已移除废弃的escape/unescape) ----------
     async function deriveKey(password) {
       const enc = new TextEncoder();
       const hash = await crypto.subtle.digest('SHA-256', enc.encode(password||''));
@@ -295,11 +294,12 @@
       const encoded = new TextEncoder().encode(plaintext);
       const ct = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, encoded);
       const pack = { n: arrayBufferToBase64(iv.buffer), c: arrayBufferToBase64(ct) };
-      return btoa(unescape(encodeURIComponent(JSON.stringify(pack))));
+      // 直接对纯ASCII的JSON字符串进行base64编码，无需escape/unescape
+      return btoa(JSON.stringify(pack));
     }
     async function decryptText(payloadBase64, password) {
-      const json = decodeURIComponent(escape(atob(payloadBase64)));
-      const pack = JSON.parse(json);
+      // 解码base64得到JSON字符串，再解析回对象
+      const pack = JSON.parse(atob(payloadBase64));
       const key = await deriveKey(password);
       const iv = new Uint8Array(base64ToArrayBuffer(pack.n));
       const ct = new Uint8Array(base64ToArrayBuffer(pack.c));
@@ -428,7 +428,7 @@
       requestAnimationFrame(animate);
     }
 
-    // ---------- 锻造（立即下载 + 背景动画） ----------
+    // ---------- 锻造 ----------
     forgeBtn.addEventListener('click', async () => {
       const text = secretText.value.trim();
       if (!text) return alert('请输入秘密文字');
@@ -481,7 +481,7 @@
       });
     });
 
-    // 检测分享链接，自动进入解码模式
+    // 检测分享链接
     function checkShareLink() {
       const hash = window.location.hash;
       if (hash.startsWith('#share=')) {
@@ -538,9 +538,20 @@
       }
     });
 
-    // ---------- 拖放文件处理 ----------
+    // ---------- 拖放文件处理（修复取消选择后文件名残留问题） ----------
     function setupDropzone(dropzone, fileInputEl, fileNameDisplay, onFileReady) {
-      dropzone.addEventListener('click', () => fileInputEl.click());
+      // 点击 dropzone 时，触发文件选择
+      dropzone.addEventListener('click', () => {
+        fileInputEl.click();
+        // 延迟检测：如果用户取消了选择（文件列表为空），则清除显示
+        setTimeout(() => {
+          if (fileInputEl.files.length === 0) {
+            if (fileNameDisplay) fileNameDisplay.textContent = '未选择文件';
+            // 注意：不清除 lastPayload，因为可能来自分享链接
+          }
+        }, 300);
+      });
+
       dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
       dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
       dropzone.addEventListener('drop', e => {
@@ -555,6 +566,7 @@
           if (onFileReady) onFileReady(file);
         }
       });
+
       fileInputEl.addEventListener('change', e => {
         if (e.target.files.length > 0) {
           if (fileNameDisplay) fileNameDisplay.textContent = e.target.files[0].name;
@@ -564,7 +576,7 @@
     }
 
     setupDropzone(decodeDropzone, fileInput, fileNameSpan, () => {
-      lastPayload = null; // 使用文件模式
+      lastPayload = null; // 使用文件模式，清除可能的分享链接 payload
     });
 
     checkShareLink();
