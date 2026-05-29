@@ -1,97 +1,271 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232A2438'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23DAA520'/%3E%3Cstop offset='50%25' stop-color='%23EBC634'/%3E%3Cstop offset='100%25' stop-color='%23FCE883'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M16 5 L25 23 H21 L16 15 11 23 H7 Z' fill='url(%23g)'/%3E%3Cpath d='M16 13 13 18 16 15.5 Z' fill='url(%23g)' opacity='.2'/%3E%3Cpath d='M16 13 16 15.5 19 18 Z' fill='url(%23g)' opacity='.3'/%3E%3Cpath d='M13 18 16 15.5 19 18 Z' fill='url(%23g)' opacity='.1'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232A2438'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23DAA520'/%3E%3Cstop offset='50%25' stop-color='%23EBC634'/%3E%3Cstop offset='100%25' stop-color='%23FCE883'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M16 5 L25 23 H21 L16 15 11 23 H7 Z' fill='url(%23g)'/%3E%3Cpath d='M16 13 13 18 16 15.5 Z' fill='url(%23g)' opacity='.2'/%3E%3Cpath d='M16 13 16 15.5 19 18 Z' fill='url(%23g)' opacity='.3'/%3E%3Cpath d='M13 18 16 15.5 19 18 Z' fill='url(%23g)' opacity='.1'/%3E%3C/svg%3E">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Aurym Runes · 符文密语</title>
   <meta property="og:title" content="Aurym Runes · 符文密语">
   <meta property="og:description" content="将你的秘密锻造成金，赠给能读懂它的人。">
-  <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'%3E%3Crect width='1200' height='630' fill='%231C1C1C'/%3E%3Cpolygon points='600,100 1000,500 850,500 600,300 350,500 200,500' fill='%23EBC634' opacity='0.9'/%3E%3Ctext x='600' y='580' font-size='36' fill='%23F5F1E8' text-anchor='middle' font-family='serif'%3EAurym Runes%3C/text%3E%3C/svg%3E">
+  <meta property="og:image"
+    content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'%3E%3Crect width='1200' height='630' fill='%231C1C1C'/%3E%3Cpolygon points='600,100 1000,500 850,500 600,300 350,500 200,500' fill='%23EBC634' opacity='0.9'/%3E%3Ctext x='600' y='580' font-size='36' fill='%23F5F1E8' text-anchor='middle' font-family='serif'%3EAurym Runes%3C/text%3E%3C/svg%3E">
   <meta property="og:type" content="website">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       background: #2A2438;
       font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      display: flex; justify-content: center; align-items: center;
-      min-height: 100vh; padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
     }
+
     .container {
-      max-width: 720px; width: 100%;
-      background: #2A2A2A; border-radius: 32px; padding: 32px 28px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(235,198,52,0.15);
-      color: #F5F1E8; position: relative; overflow: hidden;
+      max-width: 720px;
+      width: 100%;
+      background: #2A2A2A;
+      border-radius: 32px;
+      padding: 32px 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(235, 198, 52, 0.15);
+      color: #F5F1E8;
+      position: relative;
+      overflow: hidden;
     }
+
     h1 {
-      font-weight: 400; letter-spacing: 0.05em; font-size: 2rem;
-      margin-bottom: 8px; color: #EBC634; text-align: center;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      font-size: 2rem;
+      margin-bottom: 8px;
+      color: #EBC634;
+      text-align: center;
     }
+
     .sub {
-      text-align: center; color: #B0A89C; font-size: 0.95rem;
-      margin-bottom: 28px; letter-spacing: 0.02em;
+      text-align: center;
+      color: #B0A89C;
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+      letter-spacing: 0.02em;
     }
-    .tab-bar { display: flex; gap: 12px; justify-content: center; margin-bottom: 28px; flex-wrap: wrap; }
+
+    .tab-bar {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
     .tab {
-      background: transparent; border: 1px solid #36454F; color: #AFA69B;
-      padding: 10px 22px; border-radius: 40px; font-size: 0.95rem;
-      cursor: pointer; transition: all 0.2s; background: rgba(54,69,79,0.3);
+      background: transparent;
+      border: 1px solid #36454F;
+      color: #AFA69B;
+      padding: 10px 22px;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: rgba(54, 69, 79, 0.3);
     }
-    .tab.active { font-weight: 500; }
-    .panel { display: none; }
-    .panel.active { display: block; }
-    .preview-area { display: flex; justify-content: center; margin-bottom: 20px; position: relative; }
-    canvas { border-radius: 20px; background: #1C1C1C; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
-    .input-group { margin-bottom: 18px; }
-    label { display: block; font-size: 0.9rem; color: #AFA69B; margin-bottom: 6px; }
-    textarea, input { width: 100%; background: #1C1C1C; border: 1px solid #36454F;
-      border-radius: 14px; padding: 12px 14px; color: #F5F1E8; font-size: 1rem;
-      outline: none; transition: border 0.2s; font-family: inherit; }
-    textarea:focus, input:focus { border-color: #EBC634; }
+
+    .tab.active {
+      font-weight: 500;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .preview-area {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    canvas {
+      border-radius: 20px;
+      background: #1C1C1C;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      color: #AFA69B;
+      margin-bottom: 6px;
+    }
+
+    textarea,
+    input {
+      width: 100%;
+      background: #1C1C1C;
+      border: 1px solid #36454F;
+      border-radius: 14px;
+      padding: 12px 14px;
+      color: #F5F1E8;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s;
+      font-family: inherit;
+    }
+
+    textarea:focus,
+    input:focus {
+      border-color: #EBC634;
+    }
+
     .btn {
-      background: #EBC634; color: #1C1C1C; border: none; font-weight: 600;
-      padding: 14px 24px; border-radius: 40px; font-size: 1rem; cursor: pointer;
-      width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
-      box-shadow: 0 4px 14px rgba(235,198,52,0.25); transition: 0.2s;
+      background: #EBC634;
+      color: #1C1C1C;
+      border: none;
+      font-weight: 600;
+      padding: 14px 24px;
+      border-radius: 40px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(235, 198, 52, 0.25);
+      transition: 0.2s;
     }
-    .btn:hover { background: #FCE883; }
-    .btn.secondary { background: #36454F; color: #F5F1E8; box-shadow: none; }
-    .btn.secondary:hover { background: #4B5D6A; }
+
+    .btn:hover {
+      background: #FCE883;
+    }
+
+    .btn.secondary {
+      background: #36454F;
+      color: #F5F1E8;
+      box-shadow: none;
+    }
+
+    .btn.secondary:hover {
+      background: #4B5D6A;
+    }
+
     .result-box {
-      margin-top: 20px; background: #1C1C1C; border-radius: 14px; padding: 16px;
-      border: 1px solid #36454F; word-break: break-all; font-family: monospace;
-      color: #FCE883; display: none;
+      margin-top: 20px;
+      background: #1C1C1C;
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid #36454F;
+      word-break: break-all;
+      font-family: monospace;
+      color: #FCE883;
+      display: none;
     }
-    .result-box.show { display: block; }
-    .flex-row { display: flex; gap: 12px; }
-    .flex-row > * { flex: 1; }
+
+    .result-box.show {
+      display: block;
+    }
+
+    .flex-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .flex-row>* {
+      flex: 1;
+    }
+
     .dropzone {
       border: 2px dashed #36454F;
       border-radius: 20px;
       padding: 32px 16px;
       text-align: center;
       color: #AFA69B;
-      background: rgba(54,69,79,0.15);
+      background: rgba(54, 69, 79, 0.15);
       transition: all 0.2s ease;
       margin-bottom: 18px;
       cursor: pointer;
     }
+
     .dropzone.drag-over {
       border-color: #EBC634;
-      background: rgba(235,198,52,0.08);
+      background: rgba(235, 198, 52, 0.08);
       color: #EBC634;
     }
-    .dropzone .icon { font-size: 2rem; display: block; margin-bottom: 8px; }
 
-    .theme-selector { display: flex; gap: 8px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap; }
-    .theme-dot {
-      width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
-      border: 2px solid transparent; transition: 0.2s;
+    .dropzone .icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 8px;
     }
-    .theme-dot.active { border-color: #FFF; box-shadow: 0 0 8px rgba(255,255,255,0.5); }
+
+    .theme-selector {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .theme-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: 0.2s;
+    }
+
+    .theme-dot.active {
+      border-color: #FFF;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    }
+
+    .file-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 18px;
+      color: #AFA69B;
+    }
+
+    .clear-file-btn {
+      background: none;
+      border: none;
+      color: #AFA69B;
+      cursor: pointer;
+      font-size: 1.3rem;
+      line-height: 1;
+      padding: 0 4px;
+      transition: color 0.2s;
+      display: none;
+    }
+
+    .clear-file-btn:hover {
+      color: #EBC634;
+    }
 
     @media (max-width: 480px) {
-      .container { padding: 24px 16px; }
+      .container {
+        padding: 24px 16px;
+      }
+
       .preview-area canvas {
         width: 100% !important;
         height: auto !important;
@@ -99,488 +273,447 @@
     }
   </style>
 </head>
+
 <body>
-<div class="container" id="appContainer">
-  <h1>Aurym Runes</h1>
-  <div class="sub">锻造·解码</div>
+  <div class="container" id="appContainer">
+    <h1>Aurym Runes</h1>
+    <div class="sub">锻造·解码</div>
 
-  <div class="tab-bar">
-    <button class="tab active" data-panel="forge">⚒️ 锻造</button>
-    <button class="tab" data-panel="decode">📂 文件解码</button>
+    <div class="tab-bar">
+      <button class="tab active" data-panel="forge">⚒️ 锻造</button>
+      <button class="tab" data-panel="decode">📂 文件解码</button>
+    </div>
+
+    <div id="forgePanel" class="panel active">
+      <div class="preview-area">
+        <canvas id="previewCanvas" width="512" height="512"></canvas>
+      </div>
+      <div class="theme-selector" id="themeSelector">
+        <span class="theme-dot active" data-theme="darkgold" style="background:#EBC634;" title="暗金"></span>
+        <span class="theme-dot" data-theme="silver" style="background:#B0B0B0;" title="秘银"></span>
+        <span class="theme-dot" data-theme="crimson" style="background:#C97B5D;" title="猩红"></span>
+        <span class="theme-dot" data-theme="deepsea" style="background:#7EB8DA;" title="深海"></span>
+      </div>
+      <div class="input-group">
+        <label>秘密的文字</label>
+        <textarea id="secretText" rows="3" placeholder="写下只有ta能读的诗句…"></textarea>
+      </div>
+      <div class="input-group">
+        <label>加密口令（留空则无口令）</label>
+        <input type="password" id="forgePassword" placeholder="设定一个密码" autocomplete="off">
+      </div>
+      <button class="btn" id="forgeBtn"><span>✨</span> 锻造并下载符文</button>
+      <button class="btn secondary" id="shareLinkBtn" style="margin-top:12px; display:none;"><span>🔗</span>
+        复制魔法链接</button>
+      <div id="forgeHint" style="margin-top:12px; font-size:0.85rem; color:#B0A89C; text-align:center;"></div>
+    </div>
+
+    <div id="decodePanel" class="panel">
+      <div class="dropzone" id="decodeDropzone">
+        <span class="icon">🏞️</span>
+        <span>拖放符文图片到这里，或点击选择</span>
+        <input type="file" id="fileInput" accept="image/png" style="display:none">
+      </div>
+      <div class="file-name-row">
+        <span id="fileName">未选择文件</span>
+        <button id="clearFileBtn" class="clear-file-btn" title="清除文件">✕</button>
+      </div>
+      <div class="input-group">
+        <label>解密口令</label>
+        <input type="password" id="decodePassword" placeholder="输入锻造时设定的密码">
+      </div>
+      <button class="btn" id="decodeBtn"><span>🔓</span> 解码秘密</button>
+      <div id="decodeResult" class="result-box"></div>
+    </div>
   </div>
 
-  <!-- 锻造面板 -->
-  <div id="forgePanel" class="panel active">
-    <div class="preview-area">
-      <canvas id="previewCanvas" width="512" height="512"></canvas>
-    </div>
-    <div class="theme-selector" id="themeSelector">
-      <span class="theme-dot active" data-theme="darkgold" style="background:#EBC634;" title="暗金"></span>
-      <span class="theme-dot" data-theme="silver" style="background:#B0B0B0;" title="秘银"></span>
-      <span class="theme-dot" data-theme="crimson" style="background:#C97B5D;" title="猩红"></span>
-      <span class="theme-dot" data-theme="deepsea" style="background:#7EB8DA;" title="深海"></span>
-    </div>
-    <div class="input-group">
-      <label>秘密的文字</label>
-      <textarea id="secretText" rows="3" placeholder="写下只有ta能读的诗句…"></textarea>
-    </div>
-    <div class="input-group">
-      <label>加密口令（留空则无口令）</label>
-      <input type="password" id="forgePassword" placeholder="设定一个密码" autocomplete="off">
-    </div>
-    <button class="btn" id="forgeBtn"><span>✨</span> 锻造并下载符文</button>
-    <button class="btn secondary" id="shareLinkBtn" style="margin-top:12px; display:none;"><span>🔗</span> 复制魔法链接</button>
-    <div id="forgeHint" style="margin-top:12px; font-size:0.85rem; color:#B0A89C; text-align:center;"></div>
-  </div>
-
-  <!-- 文件解码面板 -->
-  <div id="decodePanel" class="panel">
-    <div class="dropzone" id="decodeDropzone">
-      <span class="icon">🏞️</span>
-      <span>拖放符文图片到这里，或点击选择</span>
-      <input type="file" id="fileInput" accept="image/png" style="display:none">
-    </div>
-    <div style="text-align:center; margin-bottom:18px; color:#AFA69B;" id="fileName">未选择文件</div>
-    <div class="input-group">
-      <label>解密口令</label>
-      <input type="password" id="decodePassword" placeholder="输入锻造时设定的密码">
-    </div>
-    <button class="btn" id="decodeBtn"><span>🔓</span> 解码秘密</button>
-    <div id="decodeResult" class="result-box"></div>
-  </div>
-</div>
-
-<script>
-  (function() {
-    // ---------- 音效 ----------
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    let audioCtx;
-    function ensureAudio() {
-      if (!audioCtx) audioCtx = new AudioCtx();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      return audioCtx;
-    }
-    function playTone(freq, type='sine', duration=0.15, vol=0.08) {
-      try {
-        const ac = ensureAudio();
-        const osc = ac.createOscillator();
-        const gain = ac.createGain();
-        osc.connect(gain); gain.connect(ac.destination);
-        osc.frequency.setValueAtTime(freq, ac.currentTime);
-        osc.type = type;
-        gain.gain.setValueAtTime(vol, ac.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + duration);
-        osc.start(); osc.stop(ac.currentTime + duration);
-      } catch(e) {}
-    }
-    function forgeSound() { playTone(520, 'triangle', 0.2, 0.1); setTimeout(()=>playTone(780, 'triangle', 0.15, 0.08), 100); }
-    function successSound() { playTone(880, 'sine', 0.1, 0.05); setTimeout(()=>playTone(1100, 'sine', 0.08, 0.04), 80); }
-
-    // ---------- 主题定义 ----------
-    const themes = {
-      darkgold: {
-        main: '#EBC634', grad: ['#EBC634','#FCE883','#DAA520'],
-        dots: [[40,40,38],[90,85,70],[180,160,100],[240,220,150]]
-      },
-      silver: {
-        main: '#B0B0B0', grad: ['#C0C0C0','#E0E0E0','#909090'],
-        dots: [[50,50,48],[110,110,105],[190,190,180],[230,230,220]]
-      },
-      crimson: {
-        main: '#C97B5D', grad: ['#C97B5D','#E8A090','#A05040'],
-        dots: [[60,40,38],[140,80,70],[200,130,110],[235,190,170]]
-      },
-      deepsea: {
-        main: '#7EB8DA', grad: ['#7EB8DA','#A0D0F0','#5080A0'],
-        dots: [[30,50,60],[60,100,110],[120,160,170],[190,210,220]]
+  <script>
+    (function () {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      let audioCtx;
+      function ensureAudio() {
+        if (!audioCtx) audioCtx = new AudioCtx();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        return audioCtx;
       }
-    };
-    let currentTheme = 'darkgold';
-
-    function applyThemeToActiveTab() {
-      const activeTab = document.querySelector('.tab.active');
-      if (activeTab) {
-        activeTab.style.background = themes[currentTheme].main;
-        activeTab.style.borderColor = themes[currentTheme].main;
-        activeTab.style.color = '#1C1C1C';
+      function playTone(freq, type = 'sine', duration = 0.15, vol = 0.08) {
+        try {
+          const ac = ensureAudio();
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.connect(gain); gain.connect(ac.destination);
+          osc.frequency.setValueAtTime(freq, ac.currentTime);
+          osc.type = type;
+          gain.gain.setValueAtTime(vol, ac.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + duration);
+          osc.start(); osc.stop(ac.currentTime + duration);
+        } catch (e) { }
       }
-    }
+      function forgeSound() { playTone(520, 'triangle', 0.2, 0.1); setTimeout(() => playTone(780, 'triangle', 0.15, 0.08), 100); }
+      function successSound() { playTone(880, 'sine', 0.1, 0.05); setTimeout(() => playTone(1100, 'sine', 0.08, 0.04), 80); }
 
-    function resetAllTabsStyle() {
-      document.querySelectorAll('.tab').forEach(t => {
-        t.style.background = '';
-        t.style.borderColor = '';
-        t.style.color = '';
+      const themes = {
+        darkgold: { main: '#EBC634', grad: ['#EBC634', '#FCE883', '#DAA520'], dots: [[40, 40, 38], [90, 85, 70], [180, 160, 100], [240, 220, 150]] },
+        silver: { main: '#B0B0B0', grad: ['#C0C0C0', '#E0E0E0', '#909090'], dots: [[50, 50, 48], [110, 110, 105], [190, 190, 180], [230, 230, 220]] },
+        crimson: { main: '#C97B5D', grad: ['#C97B5D', '#E8A090', '#A05040'], dots: [[60, 40, 38], [140, 80, 70], [200, 130, 110], [235, 190, 170]] },
+        deepsea: { main: '#7EB8DA', grad: ['#7EB8DA', '#A0D0F0', '#5080A0'], dots: [[30, 50, 60], [60, 100, 110], [120, 160, 170], [190, 210, 220]] }
+      };
+      let currentTheme = 'darkgold';
+
+      function applyThemeToActiveTab() {
+        const activeTab = document.querySelector('.tab.active');
+        if (activeTab) {
+          activeTab.style.background = themes[currentTheme].main;
+          activeTab.style.borderColor = themes[currentTheme].main;
+          activeTab.style.color = '#1C1C1C';
+        }
+      }
+      function resetAllTabsStyle() {
+        document.querySelectorAll('.tab').forEach(t => { t.style.background = ''; t.style.borderColor = ''; t.style.color = ''; });
+      }
+      function switchToPanel(panelName) {
+        resetAllTabsStyle();
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        const targetTab = document.querySelector(`.tab[data-panel="${panelName}"]`);
+        if (targetTab) { targetTab.classList.add('active'); applyThemeToActiveTab(); }
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        const targetPanel = document.getElementById(panelName + 'Panel');
+        if (targetPanel) targetPanel.classList.add('active');
+      }
+
+      function hashString(str) {
+        let hash = 5381;
+        for (let i = 0; i < str.length; i++) hash = ((hash << 5) + hash) + str.charCodeAt(i);
+        return hash >>> 0;
+      }
+
+      function drawRune(canvas, text, themeName = currentTheme) {
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width, h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        const theme = themes[themeName];
+        if (!text || text.trim().length === 0) {
+          drawDefaultHex(ctx, w, h, theme);
+          return;
+        }
+        const seed = hashString(text);
+        const leftOp = 0.08 + ((seed & 0xFF) / 255) * 0.27;
+        const rightOp = 0.08 + (((seed >> 8) & 0xFF) / 255) * 0.27;
+        const bottomOp = 0.08 + (((seed >> 16) & 0xFF) / 255) * 0.27;
+        const angleOffset = (((seed >> 16) & 0xFF) / 255) * 30 - 15;
+        const rad = angleOffset * Math.PI / 180;
+        const grad = ctx.createLinearGradient(0, 0, w * Math.cos(rad), h * Math.sin(rad));
+        grad.addColorStop(0, theme.grad[0]); grad.addColorStop(0.5, theme.grad[1]); grad.addColorStop(1, theme.grad[2]);
+
+        ctx.beginPath();
+        ctx.moveTo(w / 2, h * 0.17); ctx.lineTo(w * 0.839, h * 0.83); ctx.lineTo(w * 0.696, h * 0.83);
+        ctx.lineTo(w / 2, h * 0.437); ctx.lineTo(w * 0.304, h * 0.83); ctx.lineTo(w * 0.161, h * 0.83);
+        ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
+
+        ctx.save(); ctx.globalAlpha = leftOp;
+        ctx.beginPath(); ctx.moveTo(w / 2, h * 0.509); ctx.lineTo(w * 0.375, h * 0.723); ctx.lineTo(w / 2, h * 0.616); ctx.closePath();
+        ctx.fillStyle = grad; ctx.fill(); ctx.restore();
+        ctx.save(); ctx.globalAlpha = rightOp;
+        ctx.beginPath(); ctx.moveTo(w / 2, h * 0.509); ctx.lineTo(w / 2, h * 0.616); ctx.lineTo(w * 0.625, h * 0.723); ctx.closePath();
+        ctx.fillStyle = grad; ctx.fill(); ctx.restore();
+        ctx.save(); ctx.globalAlpha = bottomOp;
+        ctx.beginPath(); ctx.moveTo(w * 0.375, h * 0.723); ctx.lineTo(w / 2, h * 0.616); ctx.lineTo(w * 0.625, h * 0.723); ctx.closePath();
+        ctx.fillStyle = grad; ctx.fill(); ctx.restore();
+      }
+
+      function drawDefaultHex(ctx, w, h, theme) {
+        const grad = ctx.createLinearGradient(0, 0, w, h);
+        grad.addColorStop(0, theme.grad[0]); grad.addColorStop(0.5, theme.grad[1]); grad.addColorStop(1, theme.grad[2]);
+        ctx.beginPath();
+        ctx.moveTo(w / 2, h * 0.17); ctx.lineTo(w * 0.839, h * 0.83); ctx.lineTo(w * 0.696, h * 0.83);
+        ctx.lineTo(w / 2, h * 0.437); ctx.lineTo(w * 0.304, h * 0.83); ctx.lineTo(w * 0.161, h * 0.83);
+        ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
+      }
+
+      async function deriveKey(password) {
+        const enc = new TextEncoder();
+        const hash = await crypto.subtle.digest('SHA-256', enc.encode(password || ''));
+        return crypto.subtle.importKey('raw', hash, 'AES-GCM', false, ['encrypt', 'decrypt']);
+      }
+      async function encryptText(plaintext, password) {
+        const key = await deriveKey(password);
+        const iv = crypto.getRandomValues(new Uint8Array(12));
+        const encoded = new TextEncoder().encode(plaintext);
+        const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoded);
+        const pack = { n: arrayBufferToBase64(iv.buffer), c: arrayBufferToBase64(ct) };
+        return btoa(JSON.stringify(pack));
+      }
+      async function decryptText(payloadBase64, password) {
+        const pack = JSON.parse(atob(payloadBase64));
+        const key = await deriveKey(password);
+        const iv = new Uint8Array(base64ToArrayBuffer(pack.n));
+        const ct = new Uint8Array(base64ToArrayBuffer(pack.c));
+        const dec = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+        return new TextDecoder().decode(dec);
+      }
+      function arrayBufferToBase64(buf) {
+        return btoa(String.fromCharCode(...new Uint8Array(buf)));
+      }
+      function base64ToArrayBuffer(b64) {
+        const bin = atob(b64); const bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        return bytes.buffer;
+      }
+
+      function crc32(data) {
+        let c = 0xFFFFFFFF;
+        for (let i = 0; i < data.length; i++) { c ^= data[i]; for (let j = 0; j < 8; j++) { if (c & 1) c = (c >>> 1) ^ 0xEDB88320; else c >>>= 1; } }
+        return (c ^ 0xFFFFFFFF) >>> 0;
+      }
+      function insertTextChunk(pngBuf, key, text) {
+        const src = new Uint8Array(pngBuf); let off = 8, iend = -1;
+        while (off < src.length) {
+          const len = (src[off] << 24) | (src[off + 1] << 16) | (src[off + 2] << 8) | src[off + 3];
+          if (String.fromCharCode(src[off + 4], src[off + 5], src[off + 6], src[off + 7]) === 'IEND') { iend = off; break; }
+          off += 12 + len;
+        }
+        const kw = new TextEncoder().encode(key), tx = new TextEncoder().encode(text);
+        const data = new Uint8Array(kw.length + 1 + tx.length); data.set(kw, 0); data[kw.length] = 0; data.set(tx, kw.length + 1);
+        const lenB = new Uint8Array(4); new DataView(lenB.buffer).setUint32(0, data.length);
+        const typeB = new TextEncoder().encode('tEXt'); const crcD = new Uint8Array(typeB.length + data.length); crcD.set(typeB, 0); crcD.set(data, typeB.length);
+        const crcB = new Uint8Array(4); new DataView(crcB.buffer).setUint32(0, crc32(crcD));
+        const newBuf = new Uint8Array(iend + 12 + data.length + 12); newBuf.set(src.subarray(0, iend)); let p = iend;
+        newBuf.set(lenB, p); p += 4; newBuf.set(typeB, p); p += 4; newBuf.set(data, p); p += data.length; newBuf.set(crcB, p); p += 4; newBuf.set(src.subarray(iend, iend + 12), p);
+        return newBuf.buffer;
+      }
+
+      const previewCanvas = document.getElementById('previewCanvas');
+      const secretText = document.getElementById('secretText');
+      const forgePassword = document.getElementById('forgePassword');
+      const forgeBtn = document.getElementById('forgeBtn');
+      const shareLinkBtn = document.getElementById('shareLinkBtn');
+      const forgeHint = document.getElementById('forgeHint');
+      const fileInput = document.getElementById('fileInput');
+      const decodePassword = document.getElementById('decodePassword');
+      const decodeBtn = document.getElementById('decodeBtn');
+      const decodeResult = document.getElementById('decodeResult');
+      const fileNameSpan = document.getElementById('fileName');
+      const clearFileBtn = document.getElementById('clearFileBtn');
+      const decodeDropzone = document.getElementById('decodeDropzone');
+      const themeDots = document.querySelectorAll('.theme-dot');
+
+      let lastPayload = null;
+
+      function setFileName(text) {
+        fileNameSpan.textContent = text;
+        clearFileBtn.style.display = (text === '未选择文件') ? 'none' : 'inline-block';
+      }
+      function clearSelectedFile() {
+        fileInput.value = '';
+        lastPayload = null;
+        setFileName('未选择文件');
+        decodeResult.classList.remove('show');
+        decodeResult.textContent = '';
+      }
+      clearFileBtn.addEventListener('click', clearSelectedFile);
+
+      applyThemeToActiveTab();
+
+      themeDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          themeDots.forEach(d => d.classList.remove('active'));
+          dot.classList.add('active');
+          currentTheme = dot.dataset.theme;
+          applyThemeToActiveTab();
+          drawRune(previewCanvas, secretText.value);
+        });
       });
-    }
 
-    function switchToPanel(panelName) {
-      resetAllTabsStyle();
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      const targetTab = document.querySelector(`.tab[data-panel="${panelName}"]`);
-      if (targetTab) {
-        targetTab.classList.add('active');
-        applyThemeToActiveTab();
-      }
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      const targetPanel = document.getElementById(panelName + 'Panel');
-      if (targetPanel) targetPanel.classList.add('active');
-    }
-
-    // ---------- 工具函数 ----------
-    function hashString(str) {
-      let hash = 5381;
-      for (let i = 0; i < str.length; i++) hash = ((hash << 5) + hash) + str.charCodeAt(i);
-      return hash >>> 0;
-    }
-
-    // ---------- 绘制符文 ----------
-    function drawRune(canvas, text, themeName = currentTheme) {
-      const ctx = canvas.getContext('2d');
-      const w = canvas.width, h = canvas.height;
-      ctx.clearRect(0, 0, w, h);
-      const theme = themes[themeName];
-      if (!text || text.trim().length === 0) {
-        drawDefaultHex(ctx, w, h, theme);
-        return;
-      }
-      const seed = hashString(text);
-      const leftOp = 0.08 + ((seed & 0xFF)/255)*0.27;
-      const rightOp = 0.08 + (((seed>>8)&0xFF)/255)*0.27;
-      const bottomOp = 0.08 + (((seed>>16)&0xFF)/255)*0.27;
-      const angleOffset = (((seed>>16)&0xFF)/255)*30 - 15;
-      const rad = angleOffset * Math.PI/180;
-      const grad = ctx.createLinearGradient(0,0, w*Math.cos(rad), h*Math.sin(rad));
-      grad.addColorStop(0, theme.grad[0]);
-      grad.addColorStop(0.5, theme.grad[1]);
-      grad.addColorStop(1, theme.grad[2]);
-
-      ctx.beginPath();
-      ctx.moveTo(w/2, h*0.17); ctx.lineTo(w*0.839, h*0.83); ctx.lineTo(w*0.696, h*0.83);
-      ctx.lineTo(w/2, h*0.437); ctx.lineTo(w*0.304, h*0.83); ctx.lineTo(w*0.161, h*0.83);
-      ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
-
-      ctx.save(); ctx.globalAlpha = leftOp;
-      ctx.beginPath(); ctx.moveTo(w/2, h*0.509); ctx.lineTo(w*0.375, h*0.723); ctx.lineTo(w/2, h*0.616); ctx.closePath();
-      ctx.fillStyle = grad; ctx.fill(); ctx.restore();
-      ctx.save(); ctx.globalAlpha = rightOp;
-      ctx.beginPath(); ctx.moveTo(w/2, h*0.509); ctx.lineTo(w/2, h*0.616); ctx.lineTo(w*0.625, h*0.723); ctx.closePath();
-      ctx.fillStyle = grad; ctx.fill(); ctx.restore();
-      ctx.save(); ctx.globalAlpha = bottomOp;
-      ctx.beginPath(); ctx.moveTo(w*0.375, h*0.723); ctx.lineTo(w/2, h*0.616); ctx.lineTo(w*0.625, h*0.723); ctx.closePath();
-      ctx.fillStyle = grad; ctx.fill(); ctx.restore();
-    }
-
-    function drawDefaultHex(ctx, w, h, theme) {
-      const grad = ctx.createLinearGradient(0,0,w,h);
-      grad.addColorStop(0, theme.grad[0]);
-      grad.addColorStop(0.5, theme.grad[1]);
-      grad.addColorStop(1, theme.grad[2]);
-      ctx.beginPath();
-      ctx.moveTo(w/2,h*0.17); ctx.lineTo(w*0.839,h*0.83); ctx.lineTo(w*0.696,h*0.83);
-      ctx.lineTo(w/2,h*0.437); ctx.lineTo(w*0.304,h*0.83); ctx.lineTo(w*0.161,h*0.83);
-      ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
-    }
-
-    // ---------- AES-GCM (现代API，已移除废弃的escape/unescape) ----------
-    async function deriveKey(password) {
-      const enc = new TextEncoder();
-      const hash = await crypto.subtle.digest('SHA-256', enc.encode(password||''));
-      return crypto.subtle.importKey('raw', hash, 'AES-GCM', false, ['encrypt','decrypt']);
-    }
-    async function encryptText(plaintext, password) {
-      const key = await deriveKey(password);
-      const iv = crypto.getRandomValues(new Uint8Array(12));
-      const encoded = new TextEncoder().encode(plaintext);
-      const ct = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, encoded);
-      const pack = { n: arrayBufferToBase64(iv.buffer), c: arrayBufferToBase64(ct) };
-      // 直接对纯ASCII的JSON字符串进行base64编码，无需escape/unescape
-      return btoa(JSON.stringify(pack));
-    }
-    async function decryptText(payloadBase64, password) {
-      // 解码base64得到JSON字符串，再解析回对象
-      const pack = JSON.parse(atob(payloadBase64));
-      const key = await deriveKey(password);
-      const iv = new Uint8Array(base64ToArrayBuffer(pack.n));
-      const ct = new Uint8Array(base64ToArrayBuffer(pack.c));
-      const dec = await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, ct);
-      return new TextDecoder().decode(dec);
-    }
-    function arrayBufferToBase64(buf) {
-      return btoa(String.fromCharCode(...new Uint8Array(buf)));
-    }
-    function base64ToArrayBuffer(b64) {
-      const bin = atob(b64); const bytes = new Uint8Array(bin.length);
-      for (let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
-      return bytes.buffer;
-    }
-
-    // ---------- PNG 元数据 ----------
-    function crc32(data) {
-      let c=0xFFFFFFFF;
-      for(let i=0;i<data.length;i++){c^=data[i];for(let j=0;j<8;j++){if(c&1)c=(c>>>1)^0xEDB88320;else c>>>=1;}}
-      return (c^0xFFFFFFFF)>>>0;
-    }
-    function insertTextChunk(pngBuf, key, text) {
-      const src=new Uint8Array(pngBuf); let off=8, iend=-1;
-      while(off<src.length){
-        const len=(src[off]<<24)|(src[off+1]<<16)|(src[off+2]<<8)|src[off+3];
-        if(String.fromCharCode(src[off+4],src[off+5],src[off+6],src[off+7])==='IEND'){iend=off;break;}
-        off+=12+len;
-      }
-      const kw = new TextEncoder().encode(key), tx = new TextEncoder().encode(text);
-      const data = new Uint8Array(kw.length+1+tx.length); data.set(kw,0); data[kw.length]=0; data.set(tx,kw.length+1);
-      const lenB=new Uint8Array(4); new DataView(lenB.buffer).setUint32(0,data.length);
-      const typeB=new TextEncoder().encode('tEXt'); const crcD=new Uint8Array(typeB.length+data.length); crcD.set(typeB,0); crcD.set(data,typeB.length);
-      const crcB=new Uint8Array(4); new DataView(crcB.buffer).setUint32(0,crc32(crcD));
-      const newBuf=new Uint8Array(iend+12+data.length+12); newBuf.set(src.subarray(0,iend)); let p=iend;
-      newBuf.set(lenB,p);p+=4; newBuf.set(typeB,p);p+=4; newBuf.set(data,p);p+=data.length; newBuf.set(crcB,p);p+=4; newBuf.set(src.subarray(iend,iend+12),p);
-      return newBuf.buffer;
-    }
-
-    // ---------- UI 元素 ----------
-    const previewCanvas = document.getElementById('previewCanvas');
-    const secretText = document.getElementById('secretText');
-    const forgePassword = document.getElementById('forgePassword');
-    const forgeBtn = document.getElementById('forgeBtn');
-    const shareLinkBtn = document.getElementById('shareLinkBtn');
-    const forgeHint = document.getElementById('forgeHint');
-    const fileInput = document.getElementById('fileInput');
-    const decodePassword = document.getElementById('decodePassword');
-    const decodeBtn = document.getElementById('decodeBtn');
-    const decodeResult = document.getElementById('decodeResult');
-    const fileNameSpan = document.getElementById('fileName');
-    const decodeDropzone = document.getElementById('decodeDropzone');
-    const themeDots = document.querySelectorAll('.theme-dot');
-
-    let lastPayload = null;
-
-    applyThemeToActiveTab();
-
-    // ---------- 主题切换 ----------
-    themeDots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        themeDots.forEach(d => d.classList.remove('active'));
-        dot.classList.add('active');
-        currentTheme = dot.dataset.theme;
-        applyThemeToActiveTab();
-        drawRune(previewCanvas, secretText.value);
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => { switchToPanel(tab.dataset.panel); });
       });
-    });
 
-    // ---------- 标签切换 ----------
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        const panelName = tab.dataset.panel;
-        switchToPanel(panelName);
+      secretText.addEventListener('input', () => { drawRune(previewCanvas, secretText.value); });
+      drawRune(previewCanvas, '');
+
+      function playForgeAnimation() {
+        const canvas = previewCanvas;
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width, h = canvas.height;
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+          particles.push({
+            x: Math.random() * w, y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 1.8, vy: (Math.random() - 0.5) * 1.8 - 0.2,
+            life: 1.0, decay: 0.006 + Math.random() * 0.014,
+            size: Math.random() * 2.2 + 0.6, hue: 45 + Math.random() * 20
+          });
+        }
+        function animate() {
+          const alive = particles.some(p => p.life > 0);
+          if (!alive) return;
+          ctx.clearRect(0, 0, w, h);
+          drawRune(canvas, secretText.value);
+          ctx.globalCompositeOperation = 'lighter';
+          for (let p of particles) {
+            if (p.life <= 0) continue;
+            p.x += p.vx; p.y += p.vy;
+            p.life -= p.decay;
+            if (p.life < 0) p.life = 0;
+            const alpha = p.life * 0.75;
+            const radius = p.size * (0.5 + 0.5 * p.life);
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${p.hue}, 80%, 70%, ${alpha})`;
+            ctx.fill();
+          }
+          ctx.globalCompositeOperation = 'source-over';
+          requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
+      }
+
+      forgeBtn.addEventListener('click', async () => {
+        const text = secretText.value.trim();
+        if (!text) return alert('请输入秘密文字');
+        const pwd = forgePassword.value;
+        forgeBtn.disabled = true;
+        forgeBtn.innerHTML = '⏳ 锻造中...';
+        forgeSound();
+        playForgeAnimation();
+        try {
+          const payload = await encryptText(text, pwd);
+          lastPayload = payload;
+          const hdCanvas = document.createElement('canvas');
+          hdCanvas.width = 512; hdCanvas.height = 512;
+          drawRune(hdCanvas, text);
+          const blob = await new Promise(r => hdCanvas.toBlob(r, 'image/png'));
+          const buf = await blob.arrayBuffer();
+          const newBuf = insertTextChunk(buf, 'AurymRune', payload);
+          const url = URL.createObjectURL(new Blob([newBuf], { type: 'image/png' }));
+          const a = document.createElement('a');
+          a.href = url; a.download = 'AurymRune_' + Date.now() + '.png';
+          document.body.appendChild(a); a.click(); a.remove();
+          URL.revokeObjectURL(url);
+          forgeHint.textContent = '符文已保存。';
+          shareLinkBtn.style.display = 'flex';
+          successSound();
+        } catch (e) {
+          alert('失败: ' + e.message);
+        } finally {
+          forgeBtn.disabled = false;
+          forgeBtn.innerHTML = '✨ 锻造并下载符文';
+        }
       });
-    });
 
-    // 实时预览
-    secretText.addEventListener('input', () => {
-      drawRune(previewCanvas, secretText.value);
-    });
-    drawRune(previewCanvas, '');
+      shareLinkBtn.addEventListener('click', () => {
+        if (!lastPayload) return;
+        const base = window.location.href.split('#')[0];
+        const shareUrl = `${base}#share=${encodeURIComponent(lastPayload)}`;
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          forgeHint.textContent = '✨ 魔法链接已复制！发给朋友即可。';
+          successSound();
+        }).catch(() => { prompt('请手动复制链接:', shareUrl); });
+      });
 
-    // ---------- 粒子动画 ----------
-    function playForgeAnimation() {
-      const canvas = previewCanvas;
-      const ctx = canvas.getContext('2d');
-      const w = canvas.width, h = canvas.height;
-      const particles = [];
-      for (let i = 0; i < 100; i++) {
-        particles.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 1.8,
-          vy: (Math.random() - 0.5) * 1.8 - 0.2,
-          life: 1.0,
-          decay: 0.006 + Math.random() * 0.014,
-          size: Math.random() * 2.2 + 0.6,
-          hue: 45 + Math.random() * 20
+      function checkShareLink() {
+        const hash = window.location.hash;
+        if (hash.startsWith('#share=')) {
+          const payload = decodeURIComponent(hash.substring(7));
+          if (payload) {
+            switchToPanel('decode');
+            setFileName('🔮 朋友寄来的符文 (已自动加载)');
+            lastPayload = payload;
+            decodePassword.focus();
+          }
+        }
+      }
+      window.addEventListener('load', checkShareLink);
+      window.addEventListener('hashchange', checkShareLink);
+
+      decodeBtn.addEventListener('click', async () => {
+        let payload = lastPayload;
+        const file = fileInput.files[0];
+        if (!payload && !file) return alert('请拖放符文图片或通过魔法链接打开');
+        const pwd = decodePassword.value;
+        decodeBtn.disabled = true; decodeBtn.innerHTML = '🔍 解码中...';
+        try {
+          if (!payload && file) {
+            const buf = await file.arrayBuffer(); const src = new Uint8Array(buf);
+            let off = 8;
+            while (off < src.length) {
+              const len = (src[off] << 24) | (src[off + 1] << 16) | (src[off + 2] << 8) | src[off + 3];
+              if (String.fromCharCode(src[off + 4], src[off + 5], src[off + 6], src[off + 7]) === 'IEND') break;
+              if (String.fromCharCode(src[off + 4], src[off + 5], src[off + 6], src[off + 7]) === 'tEXt') {
+                const d = src.subarray(off + 8, off + 8 + len);
+                let ni = 0;
+                while (ni < d.length && d[ni] !== 0) ni++;
+                if (new TextDecoder().decode(d.slice(0, ni)) === 'AurymRune') {
+                  payload = new TextDecoder().decode(d.slice(ni + 1));
+                  break;
+                }
+              }
+              off += 12 + len;
+            }
+            if (!payload) throw new Error('未找到符文数据');
+          }
+          const txt = await decryptText(payload, pwd);
+          decodeResult.textContent = '🔓 ' + txt;
+          decodeResult.classList.add('show');
+          successSound();
+        } catch (e) {
+          decodeResult.textContent = '❌ ' + e.message;
+          decodeResult.classList.add('show');
+        } finally {
+          decodeBtn.disabled = false;
+          decodeBtn.innerHTML = '🔓 解码秘密';
+        }
+      });
+
+      function setupDropzone(dropzone, fileInputEl, fileNameDisplay, onFileReady) {
+        dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+        dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+        dropzone.addEventListener('drop', e => {
+          e.preventDefault();
+          dropzone.classList.remove('drag-over');
+          if (e.dataTransfer.files.length > 0) {
+            const file = e.dataTransfer.files[0];
+            if (!file.type.startsWith('image/')) { alert('请拖入图片文件'); return; }
+            const dt = new DataTransfer(); dt.items.add(file);
+            fileInputEl.files = dt.files;
+            setFileName(file.name);
+            if (onFileReady) onFileReady(file);
+          }
+        });
+        dropzone.addEventListener('click', () => {
+          const tempInput = document.createElement('input');
+          tempInput.type = 'file';
+          tempInput.accept = 'image/png';
+          tempInput.style.display = 'none';
+          document.body.appendChild(tempInput);
+          let cleaned = false;
+          const cleanup = () => {
+            if (cleaned) return;
+            cleaned = true;
+            window.removeEventListener('focus', onWindowFocus);
+            if (tempInput.parentNode) tempInput.parentNode.removeChild(tempInput);
+          };
+          tempInput.addEventListener('change', () => {
+            if (tempInput.files.length > 0) {
+              const file = tempInput.files[0];
+              const dt = new DataTransfer();
+              dt.items.add(file);
+              fileInputEl.files = dt.files;
+              setFileName(file.name);
+              if (onFileReady) onFileReady(file);
+            }
+            cleanup();
+          });
+          const onWindowFocus = () => { setTimeout(cleanup, 100); };
+          window.addEventListener('focus', onWindowFocus);
+          tempInput.click();
         });
       }
 
-      function animate() {
-        const alive = particles.some(p => p.life > 0);
-        if (!alive) return;
-
-        ctx.clearRect(0, 0, w, h);
-        drawRune(canvas, secretText.value);
-
-        ctx.globalCompositeOperation = 'lighter';
-        for (let p of particles) {
-          if (p.life <= 0) continue;
-          p.x += p.vx;
-          p.y += p.vy;
-          p.life -= p.decay;
-          if (p.life < 0) p.life = 0;
-          const alpha = p.life * 0.75;
-          const radius = p.size * (0.5 + 0.5 * p.life);
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, radius, 0, Math.PI*2);
-          ctx.fillStyle = `hsla(${p.hue}, 80%, 70%, ${alpha})`;
-          ctx.fill();
-        }
-        ctx.globalCompositeOperation = 'source-over';
-        requestAnimationFrame(animate);
-      }
-      requestAnimationFrame(animate);
-    }
-
-    // ---------- 锻造 ----------
-    forgeBtn.addEventListener('click', async () => {
-      const text = secretText.value.trim();
-      if (!text) return alert('请输入秘密文字');
-      const pwd = forgePassword.value;
-      forgeBtn.disabled = true;
-      forgeBtn.innerHTML = '⏳ 锻造中...';
-      forgeSound();
-      playForgeAnimation();
-
-      try {
-        const payload = await encryptText(text, pwd);
-        lastPayload = payload;
-
-        const hdCanvas = document.createElement('canvas');
-        hdCanvas.width = 512; hdCanvas.height = 512;
-        drawRune(hdCanvas, text);
-        const blob = await new Promise(r => hdCanvas.toBlob(r, 'image/png'));
-        const buf = await blob.arrayBuffer();
-        const newBuf = insertTextChunk(buf, 'AurymRune', payload);
-        const url = URL.createObjectURL(new Blob([newBuf], { type: 'image/png' }));
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'AurymRune_' + Date.now() + '.png';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-
-        forgeHint.textContent = '符文已保存。';
-        shareLinkBtn.style.display = 'flex';
-        successSound();
-      } catch (e) {
-        alert('失败: ' + e.message);
-      } finally {
-        forgeBtn.disabled = false;
-        forgeBtn.innerHTML = '✨ 锻造并下载符文';
-      }
-    });
-
-    // 复制魔法链接
-    shareLinkBtn.addEventListener('click', () => {
-      if (!lastPayload) return;
-      const base = window.location.href.split('#')[0];
-      const shareUrl = `${base}#share=${encodeURIComponent(lastPayload)}`;
-      navigator.clipboard.writeText(shareUrl).then(() => {
-        forgeHint.textContent = '✨ 魔法链接已复制！发给朋友即可。';
-        successSound();
-      }).catch(() => {
-        prompt('请手动复制链接:', shareUrl);
-      });
-    });
-
-    // 检测分享链接
-    function checkShareLink() {
-      const hash = window.location.hash;
-      if (hash.startsWith('#share=')) {
-        const payload = decodeURIComponent(hash.substring(7));
-        if (payload) {
-          switchToPanel('decode');
-          fileNameSpan.textContent = '🔮 朋友寄来的符文 (已自动加载)';
-          lastPayload = payload;
-          decodePassword.focus();
-        }
-      }
-    }
-    window.addEventListener('load', checkShareLink);
-    window.addEventListener('hashchange', checkShareLink);
-
-    // ---------- 文件解码 ----------
-    decodeBtn.addEventListener('click', async () => {
-      let payload = lastPayload;
-      const file = fileInput.files[0];
-      if (!payload && !file) return alert('请拖放符文图片或通过魔法链接打开');
-      const pwd = decodePassword.value;
-      decodeBtn.disabled = true; decodeBtn.innerHTML = '🔍 解码中...';
-      try {
-        if (!payload && file) {
-          const buf = await file.arrayBuffer(); const src = new Uint8Array(buf);
-          let off = 8;
-          while (off < src.length) {
-            const len = (src[off]<<24) | (src[off+1]<<16) | (src[off+2]<<8) | src[off+3];
-            if (String.fromCharCode(src[off+4], src[off+5], src[off+6], src[off+7]) === 'IEND') break;
-            if (String.fromCharCode(src[off+4], src[off+5], src[off+6], src[off+7]) === 'tEXt') {
-              const d = src.subarray(off+8, off+8+len);
-              let ni = 0;
-              while (ni < d.length && d[ni] !== 0) ni++;
-              if (new TextDecoder().decode(d.slice(0, ni)) === 'AurymRune') {
-                payload = new TextDecoder().decode(d.slice(ni+1));
-                break;
-              }
-            }
-            off += 12 + len;
-          }
-          if (!payload) throw new Error('未找到符文数据');
-        }
-        const txt = await decryptText(payload, pwd);
-        decodeResult.textContent = '🔓 ' + txt;
-        decodeResult.classList.add('show');
-        successSound();
-      } catch (e) {
-        decodeResult.textContent = '❌ ' + e.message;
-        decodeResult.classList.add('show');
-      } finally {
-        decodeBtn.disabled = false;
-        decodeBtn.innerHTML = '🔓 解码秘密';
-        lastPayload = null;
-      }
-    });
-
-    // ---------- 拖放文件处理（修复取消选择后文件名残留问题） ----------
-    function setupDropzone(dropzone, fileInputEl, fileNameDisplay, onFileReady) {
-      // 点击 dropzone 时，触发文件选择
-      dropzone.addEventListener('click', () => {
-        fileInputEl.click();
-        // 延迟检测：如果用户取消了选择（文件列表为空），则清除显示
-        setTimeout(() => {
-          if (fileInputEl.files.length === 0) {
-            if (fileNameDisplay) fileNameDisplay.textContent = '未选择文件';
-            // 注意：不清除 lastPayload，因为可能来自分享链接
-          }
-        }, 300);
-      });
-
-      dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
-      dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
-      dropzone.addEventListener('drop', e => {
-        e.preventDefault();
-        dropzone.classList.remove('drag-over');
-        if (e.dataTransfer.files.length > 0) {
-          const file = e.dataTransfer.files[0];
-          if (!file.type.startsWith('image/')) { alert('请拖入图片文件'); return; }
-          const dt = new DataTransfer(); dt.items.add(file);
-          fileInputEl.files = dt.files;
-          if (fileNameDisplay) fileNameDisplay.textContent = file.name;
-          if (onFileReady) onFileReady(file);
-        }
-      });
-
-      fileInputEl.addEventListener('change', e => {
-        if (e.target.files.length > 0) {
-          if (fileNameDisplay) fileNameDisplay.textContent = e.target.files[0].name;
-          if (onFileReady) onFileReady(e.target.files[0]);
-        }
-      });
-    }
-
-    setupDropzone(decodeDropzone, fileInput, fileNameSpan, () => {
-      lastPayload = null; // 使用文件模式，清除可能的分享链接 payload
-    });
-
-    checkShareLink();
-  })();
-</script>
+      setupDropzone(decodeDropzone, fileInput, fileNameSpan, () => { lastPayload = null; });
+      checkShareLink();
+    })();
+  </script>
 </body>
+
 </html>
