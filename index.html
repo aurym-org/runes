@@ -444,12 +444,16 @@
         return btoa(JSON.stringify(pack));
       }
       async function decryptText(payloadBase64, password) {
-        const pack = JSON.parse(atob(payloadBase64));
-        const key = await deriveKey(password);
-        const iv = new Uint8Array(base64ToArrayBuffer(pack.n));
-        const ct = new Uint8Array(base64ToArrayBuffer(pack.c));
-        const dec = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
-        return new TextDecoder().decode(dec);
+        try {
+          const pack = JSON.parse(atob(payloadBase64));
+          const key = await deriveKey(password);
+          const iv = new Uint8Array(base64ToArrayBuffer(pack.n));
+          const ct = new Uint8Array(base64ToArrayBuffer(pack.c));
+          const dec = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+          return new TextDecoder().decode(dec);
+        } catch (e) {
+          throw new Error('解密失败，请确认密码或文件数据是否有效。');
+        }
       }
       function arrayBufferToBase64(buf) {
         return btoa(String.fromCharCode(...new Uint8Array(buf)));
